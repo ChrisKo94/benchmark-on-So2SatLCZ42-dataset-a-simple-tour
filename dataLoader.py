@@ -18,7 +18,7 @@ def generator(h5path, batchSize=32, num=None):
             batch_indices = indices[i:i+batchSize]
             batch_indices.sort()
 
-            by = db["label"][batch_indices,:]
-            bx = db["sen2"][batch_indices,:,:,:]
+            by = db["y"][batch_indices,:]
+            bx = db["x"][batch_indices,:,:,:]
 
             yield (bx,by)

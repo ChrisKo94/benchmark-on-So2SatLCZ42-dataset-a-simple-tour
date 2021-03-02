@@ -16,6 +16,7 @@ import keras
 from keras.layers import *
 from keras.regularizers import l2
 from keras.models import Model
+import numpy as np
 
 
 def sen2LCZ_drop_core(inputs, num_classes=17, bn=1, depth=5, dim=16, dropRate=0.1, fusion=0):
