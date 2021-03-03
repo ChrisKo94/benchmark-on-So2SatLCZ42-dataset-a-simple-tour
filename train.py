@@ -14,9 +14,7 @@ from keras.callbacks import ModelCheckpoint
 import os
 import tensorflow as tf
 #os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-gpu_options = tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.45)
-
-session = tf.Session(config=gpu_options)
+tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.45)
 
 ###################################################
 'path to save models from check points:'
