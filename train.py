@@ -13,11 +13,10 @@ from keras.callbacks import EarlyStopping
 from keras.callbacks import ModelCheckpoint
 import os
 import tensorflow as tf
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.45#0.41
+#os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+tf.config.experimental.gpu_options.per_process_gpu_memory_fraction = 0.45#0.41
 
-session = tf.Session(config=config)
+#session = tf.Session(config=config)
 
 ###################################################
 'path to save models from check points:'
