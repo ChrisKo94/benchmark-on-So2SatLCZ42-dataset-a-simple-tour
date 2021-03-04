@@ -38,8 +38,8 @@ batchSize=32
 'number of all samples in training and validation sets'
 trainNumber=158799
 validationNumber=30695
-lr = 0.0005
-lr_sched = lr.step_decay_schedule(initial_lr=lr, decay_factor=0.5, step_size=5)
+lrate = 0.0005
+lr_sched = lr.step_decay_schedule(initial_lr=lrate, decay_factor=0.5, step_size=5)
 
 ###################################################
 # patch_shape=(32,32,10)
@@ -49,7 +49,7 @@ model = model.sen2LCZ_drop(depth=17, dropRate=0.2, fusion=1)
 model.compile(optimizer = Nadam(), loss = 'categorical_crossentropy', metrics=['accuracy'])
 
 early_stopping = EarlyStopping(monitor = 'val_loss', patience = 40)
-modelbest = file0 + "Sen2LCZ_" + str(batchSize) + "_lr_ " + str(lr) +"_weights_best.hdf5"
+modelbest = file0 + "Sen2LCZ_" + str(batchSize) + "_lr_ " + str(lrate) +"_weights_best.hdf5"
 checkpoint = ModelCheckpoint(modelbest, monitor='val_accuracy', verbose=1, save_best_only=True,
                              save_weights_only=True, mode='auto', save_freq='epoch')
 
