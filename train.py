@@ -16,16 +16,20 @@ from keras.callbacks import ModelCheckpoint
 import os
 
 #os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-gpu = tf.config.experimental.list_physical_devices('GPU')
-tf.config.experimental.set_memory_growth(gpu[0], True)
+#gpu = tf.config.experimental.list_physical_devices('GPU')
+#tf.config.experimental.set_memory_growth(gpu[0], True)
 
 ###################################################
 'path to save models from check points:'
 file0='/data/lcz42_votes/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
+#file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
+
 
 'path to data, needs to be set accordingly'
 train_file='/data/lcz42_votes/data/train_data.h5'
+#train_file = "D:/Data/LCZ_Votes/train_data.h5"
 validation_file='/data/lcz42_votes/data/validation_data.h5'
+#validation_file = "D:/Data/LCZ_Votes/validation_data.h5"
 
 numClasses=17
 batchSize=32
@@ -52,6 +56,6 @@ model.fit(generator(train_file, batchSize=batchSize, num=trainNumber),
                 steps_per_epoch = trainNumber//batchSize,
                 validation_data= generator(validation_file, num=validationNumber, batchSize=batchSize),
                 validation_steps = validationNumber//batchSize,
-                epochs=5,
+                epochs=100,
                 max_queue_size=100,
                 callbacks=[early_stopping, checkpoint, lr_sched])

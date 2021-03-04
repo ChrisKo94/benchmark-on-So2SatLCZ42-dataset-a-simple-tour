@@ -32,7 +32,7 @@ def predata4LCZ(file, keyX, keyY):
 
     return x_tra, y_tra
 ################################################################################
-file0 ='./results/'
+file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
 model = model.sen2LCZ_drop(depth=17, dropRate=0.2, fusion=1)
 batch_size = 32#8 16 32
 numC= 17 ;
@@ -47,7 +47,7 @@ patch_shape = (32, 32, 10)
 
 
 #########################################
-modelbest = file0  + "_" + str(batch_size) +"_weights.best.hdf5"
+modelbest = file0  + "Sen2LCZ_" + str(batch_size) +"_weights_best.hdf5"
 
 
 'load saved best model'
