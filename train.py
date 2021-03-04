@@ -19,7 +19,7 @@ tf.config.experimental.set_memory_growth(gpu[0], True)
 
 ###################################################
 'path to save models from check points:'
-file0='./results/'
+file0='/data/lcz42_votes/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
 
 'path to data, needs to be set accordingly'
 train_file='/data/lcz42_votes/data/train_data.h5'
