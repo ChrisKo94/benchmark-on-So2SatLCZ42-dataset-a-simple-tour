@@ -49,6 +49,6 @@ model.fit_generator(generator(train_file, batchSize=batchSize, num=trainNumber),
                 steps_per_epoch = trainNumber//batchSize,
                 validation_data= generator(validation_file, num=validationNumber, batchSize=batchSize),
                 validation_steps = validationNumber//batchSize,
-                epochs=100,
+                epochs=5,
                 max_queue_size=100,
                 callbacks=[early_stopping, checkpoint, lr_sched])
