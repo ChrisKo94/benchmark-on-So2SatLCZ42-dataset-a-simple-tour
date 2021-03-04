@@ -38,7 +38,7 @@ batchSize=32
 'number of all samples in training and validation sets'
 trainNumber=158799
 validationNumber=30695
-lr_sched = lr.step_decay_schedule(initial_lr=0.002, decay_factor=0.5, step_size=5)
+lr_sched = lr.step_decay_schedule(initial_lr=0.0005, decay_factor=0.5, step_size=5)
 
 ###################################################
 # patch_shape=(32,32,10)
