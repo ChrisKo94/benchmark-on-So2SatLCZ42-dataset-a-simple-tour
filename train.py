@@ -16,8 +16,8 @@ from keras.callbacks import ModelCheckpoint
 import os
 
 #os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-#gpu = tf.config.experimental.list_physical_devices('GPU')
-#tf.config.experimental.set_memory_growth(gpu[0], True)
+gpu = tf.config.experimental.list_physical_devices('GPU')
+tf.config.experimental.set_memory_growth(gpu[0], True)
 
 ###################################################
 'path to save models from check points:'
