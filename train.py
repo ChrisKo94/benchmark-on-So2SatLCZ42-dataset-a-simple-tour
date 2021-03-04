@@ -49,7 +49,7 @@ model = model.sen2LCZ_drop(depth=17, dropRate=0.2, fusion=1)
 model.compile(optimizer = Nadam(), loss = 'categorical_crossentropy', metrics=['accuracy'])
 
 early_stopping = EarlyStopping(monitor = 'val_loss', patience = 40)
-modelbest = file0 + "Sen2LCZ_" + str(batchSize) + "_lr_ " + str(lrate) +"_weights_best.hdf5"
+modelbest = file0 + "Sen2LCZ_" + str(batchSize) + "_lr_" + str(lrate) +"_weights_best.hdf5"
 checkpoint = ModelCheckpoint(modelbest, monitor='val_accuracy', verbose=1, save_best_only=True,
                              save_weights_only=True, mode='auto', save_freq='epoch')
 
