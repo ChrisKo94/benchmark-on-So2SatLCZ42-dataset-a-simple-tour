@@ -43,7 +43,8 @@ model.compile(optimizer = Nadam(), loss = 'categorical_crossentropy', metrics=['
 
 early_stopping = EarlyStopping(monitor = 'val_loss', patience = 40)
 modelbest = file0 + "Sen2LCZ_" + str(batchSize) +"_weights.best.hdf5"
-checkpoint = ModelCheckpoint(modelbest, monitor='val_accuracy', verbose=1, save_best_only=True, save_weights_only=True, mode='auto', period=1)
+checkpoint = ModelCheckpoint(modelbest, monitor='val_accuracy', verbose=1, save_best_only=True,
+                             save_weights_only=True, mode='auto', save_freq='epoch')
 
 model.fit(generator(train_file, batchSize=batchSize, num=trainNumber),
                 steps_per_epoch = trainNumber//batchSize,
