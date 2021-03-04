@@ -12,7 +12,7 @@ Multilevel Feature Fusion-Based CNN for Local Climate Zone Classification From S
 """
 
 from __future__ import print_function
-import keras
+from tensorflow import keras
 from keras.layers import *
 from keras.regularizers import l2
 from keras.models import Model

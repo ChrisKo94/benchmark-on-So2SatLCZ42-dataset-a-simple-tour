@@ -7,12 +7,14 @@ import lr
 
 from dataLoader import generator
 
+import tensorflow as tf
+from tensorflow import keras
 from keras.optimizers import Nadam
 from keras.callbacks import EarlyStopping
 # from keras.callbacks import TensorBoard
 from keras.callbacks import ModelCheckpoint
 import os
-import tensorflow as tf
+
 #os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 gpu = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(gpu[0], True)
