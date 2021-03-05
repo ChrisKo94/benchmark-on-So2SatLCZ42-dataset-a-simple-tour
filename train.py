@@ -38,7 +38,7 @@ batchSize=32
 'number of all samples in training and validation sets'
 trainNumber=158799
 validationNumber=30695
-lrate = 0.0005
+lrate = 0.0001
 lr_sched = lr.step_decay_schedule(initial_lr=lrate, decay_factor=0.5, step_size=5)
 
 ###################################################
