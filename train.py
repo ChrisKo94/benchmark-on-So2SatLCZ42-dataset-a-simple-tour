@@ -116,7 +116,7 @@ checkpoint = ModelCheckpoint(modelbest, monitor='val_accuracy', verbose=1, save_
 
 model.fit(generator(x_train, y_train, batchSize=batchSize, num=trainNumber, mode=mode),
                 steps_per_epoch = trainNumber//batchSize,
-                validation_data= generator(x_val, y_val, num=validationNumber, batchSize=batchSize),
+                validation_data= generator(x_val, y_val, num=validationNumber, batchSize=batchSize, mode=mode),
                 validation_steps = validationNumber//batchSize,
                 epochs=100,
                 max_queue_size=100,
