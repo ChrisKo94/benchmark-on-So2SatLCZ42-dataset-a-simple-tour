@@ -4,9 +4,7 @@
 import h5py
 import numpy as np
 
-def generator(h5path, batchSize=32, num=None):
-
-    db = h5py.File(h5path, "r")
+def generator(features, labels, batchSize=32, num=None):
 
     indices=np.arange(num)
 
@@ -18,7 +16,7 @@ def generator(h5path, batchSize=32, num=None):
             batch_indices = indices[i:i+batchSize]
             batch_indices.sort()
 
-            by = db["y"][batch_indices,:]
-            bx = db["x"][batch_indices,:,:,:]
+            by = labels[batch_indices,:]
+            bx = features[batch_indices,:,:,:]
 
             yield (bx,by)
