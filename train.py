@@ -32,7 +32,7 @@ validation_file='/data/lcz42_votes/data/validation_data.h5'
 #validation_file = "D:/Data/LCZ_Votes/validation_data.h5"
 
 numClasses=17
-batchSize=64
+batchSize=128
 ###################################################
 
 'number of all samples in training and validation sets'
