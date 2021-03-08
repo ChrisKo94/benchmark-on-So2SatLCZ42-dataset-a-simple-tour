@@ -114,7 +114,7 @@ modelbest = PATH + "_weights_best.hdf5"
 checkpoint = ModelCheckpoint(modelbest, monitor='val_accuracy', verbose=1, save_best_only=True,
                              save_weights_only=True, mode='auto', save_freq='epoch')
 
-model.fit(generator(x_train, y_train, batchSize=batchSize, num=trainNumber),
+model.fit(generator(x_train, y_train, batchSize=batchSize, num=trainNumber, mode=mode),
                 steps_per_epoch = trainNumber//batchSize,
                 validation_data= generator(x_val, y_val, num=validationNumber, batchSize=batchSize),
                 validation_steps = validationNumber//batchSize,

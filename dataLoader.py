@@ -4,7 +4,7 @@
 import h5py
 import numpy as np
 
-def generator(features, labels, batchSize=32, num=None):
+def generator(features, labels, batchSize=32, num=None, mode="all"):
 
     indices=np.arange(num)
 
@@ -16,7 +16,10 @@ def generator(features, labels, batchSize=32, num=None):
             batch_indices = indices[i:i+batchSize]
             batch_indices.sort()
 
-            by = labels[batch_indices,:]
+            if mode == "urban":
+                by = labels[batch_indices, :10]
+            else:
+                by = labels[batch_indices, :]
             bx = features[batch_indices,:,:,:]
 
             yield (bx,by)
