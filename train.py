@@ -62,7 +62,6 @@ if mode == "urban":
     y_val = y_val[indices_val]
 
 if entropy_quantile > 0 and mode == "urban":
-    indices_train = np.where(np.where(y_train == np.amax(y_train, 0))[1] + 1 < 11)[0]
     entropies = h5py.File(path_data + "entropies_train.h5", 'r')
     entropies_train = np.array(entropies.get("entropies_train"))
     entropies_train = entropies_train[indices_train]
