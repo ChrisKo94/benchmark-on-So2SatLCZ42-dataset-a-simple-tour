@@ -37,7 +37,7 @@ path_data = "/data/lcz42_votes/data/"
 #path_data = "D:/Data/LCZ_Votes/"
 
 numClasses=17
-batchSize=32
+batchSize=64
 ###################################################
 
 #mode = "all"
