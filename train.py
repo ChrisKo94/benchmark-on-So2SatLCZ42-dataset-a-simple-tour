@@ -37,7 +37,7 @@ path_data = "/data/lcz42_votes/data/"
 #path_data = "D:/Data/LCZ_Votes/"
 
 numClasses=17
-batchSize=64
+batchSize=32
 ###################################################
 
 #mode = "all"
@@ -84,7 +84,7 @@ if entropy_quantile > 0 and mode == "urban":
 trainNumber=y_train.shape[0]
 validationNumber=y_val.shape[0]
 
-lrate = 0.0001
+lrate = 0.0005
 lr_sched = lr.step_decay_schedule(initial_lr=lrate, decay_factor=0.5, step_size=5)
 
 ###################################################
