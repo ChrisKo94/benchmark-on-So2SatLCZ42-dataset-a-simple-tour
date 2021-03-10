@@ -34,7 +34,7 @@ def predata4LCZ(file, keyX, keyY):
 ################################################################################
 file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
 
-mode = "burban"
+mode = "urban"
 #mode = all
 
 if mode == "urban":
