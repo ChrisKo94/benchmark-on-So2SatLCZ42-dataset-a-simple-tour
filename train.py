@@ -43,7 +43,7 @@ batchSize=64
 #mode = "all"
 mode = "urban"
 uncertain = False
-entropy_quantile = [0.3, 0.4, 0.5, 0.6, 0.7] # choose quantile of most certain images (w.r.t. voter entropy) for training, requires mode = "urban"
+entropy_quantile = np.array([0.3, 0.4, 0.5, 0.6, 0.7]) # choose quantile of most certain images (w.r.t. voter entropy) for training, requires mode = "urban"
 
 for i in entropy_quantile:
 
