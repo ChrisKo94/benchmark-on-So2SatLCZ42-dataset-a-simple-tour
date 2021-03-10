@@ -33,7 +33,15 @@ def predata4LCZ(file, keyX, keyY):
     return x_tra, y_tra
 ################################################################################
 file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
-model = model.sen2LCZ_drop(depth=17, dropRate=0.2, fusion=1)
+
+mode = "burban"
+#mode = all
+
+if mode == "urban":
+    model = model.sen2LCZ_drop(depth=17, num_classes=10, dropRate=0.2, fusion=1)
+else:
+    model = model.sen2LCZ_drop(depth=17, dropRate=0.2, fusion=1)
+
 batch_size = 64#8 16 32
 lrate = 0.002
 numC= 17 ;
@@ -44,11 +52,20 @@ file='D:/Data/LCZ_Votes/test_data.h5'
 #file2 = 'D:/Data/LCZ_Votes/train_data.h5'
 #x_trn, y_trn = predata4LCZ(file2, 'x', 'y')
 x_tst, y_tst= predata4LCZ(file, 'x', 'y')
+
+if mode == "urban":
+    indices_test = np.where(np.where(y_tst == np.amax(y_tst, 0))[1] + 1 < 11)[0]
+    x_tst = x_tst[indices_test, :, :, :]
+    y_tst = y_tst[indices_test, :10]
+
 patch_shape = (32, 32, 10)
 
 
 #########################################
-modelbest = file0  + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_weights_best.hdf5"
+if mode == "urban":
+    modelbest = file0  + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_urban" + "_weights_best.hdf5"
+else:
+    modelbest = file0 + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_weights_best.hdf5"
 
 'load saved best model'
 model.load_weights(modelbest, by_name=False)
@@ -67,6 +84,9 @@ y_testV = y_tst.argmax(axis=-1)+1
 #y_testV = np.hstack((y_testV, y_trnV))
 
 labels=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "A", "B", "C", "D", "E", "F", "G"]
+
+if mode == "urban":
+    labels = labels[:10]
 
 C = confusion_matrix(y_testV-1, y_pre-1, normalize="true")
 conf_mat = pd.DataFrame(C, index=labels, columns=labels)
