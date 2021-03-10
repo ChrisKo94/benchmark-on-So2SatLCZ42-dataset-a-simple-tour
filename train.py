@@ -45,7 +45,7 @@ mode = "urban"
 uncertain = False
 entropy_quantile = np.array([0.3, 0.4, 0.5, 0.6, 0.7]) # choose quantile of most certain images (w.r.t. voter entropy) for training, requires mode = "urban"
 
-for i in entropy_quantile:
+for i in range(len(entropy_quantile)):
 
     train_data = h5py.File(train_file, 'r')
     x_train = np.array(train_data.get("x"))
@@ -63,7 +63,7 @@ for i in entropy_quantile:
         x_val = x_val[indices_val, :, :, :]
         y_val = y_val[indices_val]
 
-    if entropy_quantile > 0 and mode == "urban":
+    if entropy_quantile[i] > 0 and mode == "urban":
         entropies = h5py.File(path_data + "entropies_train.h5", 'r')
         entropies_train = np.array(entropies.get("entropies_train"))
         entropies_train = entropies_train[indices_train]
@@ -78,7 +78,7 @@ for i in entropy_quantile:
         ## Order training data accordingly
         idx = np.array(entropies["order"])
         ## Cut off at given quantile
-        idx = idx[:np.floor(entropy_quantile * len(idx)).astype(int)]
+        idx = idx[:np.floor(entropy_quantile[i] * len(idx)).astype(int)]
         x_train = x_train[idx, :, :, :]
         y_train = y_train[idx]
 
@@ -106,11 +106,11 @@ for i in entropy_quantile:
     if mode == "urban":
         PATH = PATH + "_urban"
 
-    if entropy_quantile > 0:
+    if entropy_quantile[i] > 0:
         if uncertain == True:
-            PATH = PATH + "_most_uncertain_" + str(entropy_quantile)
+            PATH = PATH + "_most_uncertain_" + str(entropy_quantile[i])
         else:
-            PATH = PATH + "_most_certain_" + str(entropy_quantile)
+            PATH = PATH + "_most_certain_" + str(entropy_quantile[i])
     modelbest = PATH + "_weights_best.hdf5"
 
     checkpoint = ModelCheckpoint(modelbest, monitor='val_accuracy', verbose=1, save_best_only=True,
