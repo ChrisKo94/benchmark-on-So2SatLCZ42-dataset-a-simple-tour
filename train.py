@@ -53,7 +53,7 @@ batchSize=64
 #mode = "all"
 mode = "urban"
 uncertain = False
-entropy_quantile = 0.7# choose quantile of most certain images (w.r.t. voter entropy) for training, requires mode = "urban"
+entropy_quantile = 0# choose quantile of most certain images (w.r.t. voter entropy) for training, requires mode = "urban"
 
 train_data = h5py.File(train_file, 'r')
 x_train = np.array(train_data.get("x"))
