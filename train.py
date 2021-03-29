@@ -22,18 +22,28 @@ import os
 gpu = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(gpu[0], True)
 
+all_cities = True
+
 ###################################################
 'path to save models from check points:'
-file0='/data/lcz42_votes/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
+if all_cities:
+    file0 = '/data/lcz42_votes/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/all_cities/'
+else:
+    file0 = '/data/lcz42_votes/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
 #file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
 
-
 'path to data, needs to be set accordingly'
-train_file='/data/lcz42_votes/data/train_data.h5'
+if all_cities:
+    train_file = '/data/lcz42_cities/train_data.h5'
+    validation_file = '/data/lcz42_cities/validation_data.h5'
+    path_data = "/data/lcz42_cities/"
+else:
+    train_file = '/data/lcz42_votes/data/train_data.h5'
+    validation_file = '/data/lcz42_votes/data/validation_data.h5'
+    path_data = "/data/lcz42_votes/data/"
+
 #train_file = "D:/Data/LCZ_Votes/train_data.h5"
-validation_file='/data/lcz42_votes/data/validation_data.h5'
 #validation_file = "D:/Data/LCZ_Votes/validation_data.h5"
-path_data = "/data/lcz42_votes/data/"
 #path_data = "D:/Data/LCZ_Votes/"
 
 numClasses=17
@@ -42,7 +52,7 @@ batchSize=64
 
 #mode = "all"
 mode = "urban"
-uncertain = True
+uncertain = False
 entropy_quantile = 0.7# choose quantile of most certain images (w.r.t. voter entropy) for training, requires mode = "urban"
 
 train_data = h5py.File(train_file, 'r')
