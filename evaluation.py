@@ -32,9 +32,9 @@ def predata4LCZ(file, keyX, keyY):
 
     return x_tra, y_tra
 ################################################################################
-file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
+file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/all_cities/'
 
-mode = "burban"
+mode = "urban"
 #mode = all
 
 if mode == "urban":
@@ -48,9 +48,9 @@ numC= 17 ;
 
 'loading test data'
 #file='/data/lcz42_votes/data/test_data.h5'
-file='D:/Data/LCZ_Votes/test_data.h5'
-#file2 = 'D:/Data/LCZ_Votes/train_data.h5'
-#x_trn, y_trn = predata4LCZ(file2, 'x', 'y')
+#file='D:/Data/LCZ_Votes/test_data.h5'
+file='D:/Data/LCZ42_Cities/test_data.h5'
+
 x_tst, y_tst= predata4LCZ(file, 'x', 'y')
 
 if mode == "urban":

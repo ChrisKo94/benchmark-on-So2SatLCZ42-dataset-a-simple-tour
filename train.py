@@ -20,7 +20,7 @@ import os
 
 #os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 gpu = tf.config.experimental.list_physical_devices('GPU')
-tf.config.experimental.set_memory_growth(gpu[0], True)
+#tf.config.experimental.set_memory_growth(gpu[0], True)
 
 all_cities = True
 
@@ -42,9 +42,9 @@ else:
     validation_file = '/data/lcz42_votes/data/validation_data.h5'
     path_data = "/data/lcz42_votes/data/"
 
-#train_file = "D:/Data/LCZ_Votes/train_data.h5"
-#validation_file = "D:/Data/LCZ_Votes/validation_data.h5"
-#path_data = "D:/Data/LCZ_Votes/"
+train_file = "D:/Data/LCZ42_cities/train_data.h5"
+validation_file = "D:/Data/LCZ42_Cities/validation_data.h5"
+path_data = "D:/Data/LCZ42_Cities/"
 
 numClasses=17
 batchSize=32
