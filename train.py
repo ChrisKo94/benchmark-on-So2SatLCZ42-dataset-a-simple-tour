@@ -122,6 +122,8 @@ early_stopping = EarlyStopping(monitor = 'val_loss', patience = 40)
 PATH = file0 + "Sen2LCZ_" + str(batchSize) + "_lr_" + str(lrate)
 if mode == "urban":
     PATH = PATH + "_urban"
+if distributional:
+    PATH = PATH + "_d"
 
 if entropy_quantile > 0:
     if uncertain == True:
