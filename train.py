@@ -23,6 +23,7 @@ gpu = tf.config.experimental.list_physical_devices('GPU')
 #tf.config.experimental.set_memory_growth(gpu[0], True)
 
 all_cities = True
+distributional = True
 
 ###################################################
 'path to save models from check points:'
@@ -42,10 +43,6 @@ else:
     validation_file = '/data/lcz42_votes/data/validation_data.h5'
     path_data = "/data/lcz42_votes/data/"
 
-train_file = "D:/Data/LCZ42_cities/train_data.h5"
-validation_file = "D:/Data/LCZ42_Cities/validation_data.h5"
-path_data = "D:/Data/LCZ42_Cities/"
-
 numClasses=17
 batchSize=32
 ###################################################
@@ -63,13 +60,22 @@ validation_data = h5py.File(validation_file, 'r')
 x_val = np.array(validation_data.get("x"))
 y_val = np.array(validation_data.get("y"))
 
+if distributional:
+    train_distributions = h5py.File('/data/lcz42_votes/data/train_label_distributions_data.h5', 'r')
+    y_train = np.array(train_distributions['train_label_distributions'])
+    val_distributions = h5py.File('/data/lcz42_votes/data/val_label_distributions_data.h5', 'r')
+    y_val = np.array(train_distributions['val_label_distributions'])
+
 if mode == "urban":
     indices_train = np.where(np.where(y_train == np.amax(y_train, 0))[1] + 1 < 11)[0]
     x_train = x_train[indices_train, :, :, :]
-    y_train = y_train[indices_train]
+
     indices_val = np.where(np.where(y_val == np.amax(y_val, 0))[1] + 1 < 11)[0]
     x_val = x_val[indices_val, :, :, :]
-    y_val = y_val[indices_val]
+
+    if not distributional:
+        y_train = y_train[indices_train]
+        y_val = y_val[indices_val]
 
 if entropy_quantile > 0 and mode == "urban":
     entropies = h5py.File(path_data + "entropies_train.h5", 'r')
@@ -105,8 +111,11 @@ if mode == "urban":
 else:
     model = model.sen2LCZ_drop(depth=17, dropRate=0.2, fusion=1)
 
+if distributional:
+    model.compile(optimizer=Nadam(), loss='KLDivergence', metrics=['KLDivergence'])
+else:
+    model.compile(optimizer=Nadam(), loss='categorical_crossentropy', metrics=['accuracy'])
 
-model.compile(optimizer = Nadam(), loss = 'categorical_crossentropy', metrics=['accuracy'])
 
 early_stopping = EarlyStopping(monitor = 'val_loss', patience = 40)
 
