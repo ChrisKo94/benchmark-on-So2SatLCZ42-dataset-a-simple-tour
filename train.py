@@ -60,16 +60,9 @@ validation_data = h5py.File(validation_file, 'r')
 x_val = np.array(validation_data.get("x"))
 y_val = np.array(validation_data.get("y"))
 
-if distributional:
-    train_distributions = h5py.File('/data/lcz42_votes/data/train_label_distributions_data.h5', 'r')
-    y_train = np.array(train_distributions['train_label_distributions'])
-    val_distributions = h5py.File('/data/lcz42_votes/data/val_label_distributions_data.h5', 'r')
-    y_val = np.array(val_distributions['val_label_distributions'])
-
 if mode == "urban":
     indices_train = np.where(np.where(y_train == np.amax(y_train, 0))[1] + 1 < 11)[0]
     x_train = x_train[indices_train, :, :, :]
-
     indices_val = np.where(np.where(y_val == np.amax(y_val, 0))[1] + 1 < 11)[0]
     x_val = x_val[indices_val, :, :, :]
 
@@ -96,6 +89,12 @@ if entropy_quantile > 0 and mode == "urban":
     x_train = x_train[idx, :, :, :]
     y_train = y_train[idx]
 
+if distributional:
+    train_distributions = h5py.File('/data/lcz42_votes/data/train_label_distributions_data.h5', 'r')
+    y_train = np.array(train_distributions['train_label_distributions'])
+    val_distributions = h5py.File('/data/lcz42_votes/data/val_label_distributions_data.h5', 'r')
+    y_val = np.array(val_distributions['val_label_distributions'])
+
 'number of all samples in training and validation sets'
 trainNumber=y_train.shape[0]
 validationNumber=y_val.shape[0]
@@ -116,12 +115,12 @@ if distributional:
 else:
     model.compile(optimizer=Nadam(), loss='categorical_crossentropy', metrics=['accuracy'])
 
-
 early_stopping = EarlyStopping(monitor = 'val_loss', patience = 40)
 
 PATH = file0 + "Sen2LCZ_" + str(batchSize) + "_lr_" + str(lrate)
 if mode == "urban":
     PATH = PATH + "_urban"
+
 if distributional:
     PATH = PATH + "_d"
 
@@ -130,9 +129,10 @@ if entropy_quantile > 0:
         PATH = PATH + "_most_uncertain_" + str(entropy_quantile)
     else:
         PATH = PATH + "_most_certain_" + str(entropy_quantile)
+
 modelbest = PATH + "_weights_best.hdf5"
 
-checkpoint = ModelCheckpoint(modelbest, monitor='val_accuracy', verbose=1, save_best_only=True,
+checkpoint = ModelCheckpoint(modelbest, monitor='val_kullback_leibler_divergence', verbose=1, save_best_only=True,
                              save_weights_only=True, mode='auto', save_freq='epoch')
 
 model.fit(generator(x_train, y_train, batchSize=batchSize, num=trainNumber, mode=mode),
