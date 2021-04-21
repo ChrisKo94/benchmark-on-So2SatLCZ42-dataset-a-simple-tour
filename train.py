@@ -64,7 +64,7 @@ if distributional:
     train_distributions = h5py.File('/data/lcz42_votes/data/train_label_distributions_data.h5', 'r')
     y_train = np.array(train_distributions['train_label_distributions'])
     val_distributions = h5py.File('/data/lcz42_votes/data/val_label_distributions_data.h5', 'r')
-    y_val = np.array(train_distributions['val_label_distributions'])
+    y_val = np.array(val_distributions['val_label_distributions'])
 
 if mode == "urban":
     indices_train = np.where(np.where(y_train == np.amax(y_train, 0))[1] + 1 < 11)[0]
@@ -100,7 +100,7 @@ if entropy_quantile > 0 and mode == "urban":
 trainNumber=y_train.shape[0]
 validationNumber=y_val.shape[0]
 
-lrate = 0.0001
+lrate = 0.002
 lr_sched = lr.step_decay_schedule(initial_lr=lrate, decay_factor=0.5, step_size=5)
 
 ###################################################
