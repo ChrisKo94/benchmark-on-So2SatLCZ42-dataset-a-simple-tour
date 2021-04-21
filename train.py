@@ -22,7 +22,7 @@ import os
 gpu = tf.config.experimental.list_physical_devices('GPU')
 #tf.config.experimental.set_memory_growth(gpu[0], True)
 
-all_cities = True
+all_cities = False
 distributional = True
 
 ###################################################
