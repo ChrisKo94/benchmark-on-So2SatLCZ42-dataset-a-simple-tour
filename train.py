@@ -20,7 +20,7 @@ import os
 
 #os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 gpu = tf.config.experimental.list_physical_devices('GPU')
-#tf.config.experimental.set_memory_growth(gpu[0], True)
+tf.config.experimental.set_memory_growth(gpu[0], True)
 
 all_cities = False
 distributional = True
@@ -44,7 +44,7 @@ else:
     path_data = "/data/lcz42_votes/data/"
 
 numClasses=17
-batchSize=32
+batchSize=64
 ###################################################
 
 #mode = "all"
