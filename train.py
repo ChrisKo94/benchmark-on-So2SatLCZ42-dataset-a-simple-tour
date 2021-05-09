@@ -25,6 +25,8 @@ tf.config.experimental.set_memory_growth(gpu[0], True)
 all_cities = False
 distributional = True
 
+alpha = 0.08
+
 ###################################################
 'path to save models from check points:'
 if all_cities:
@@ -90,10 +92,18 @@ if entropy_quantile > 0 and mode == "urban":
     y_train = y_train[idx]
 
 if distributional:
-    train_distributions = h5py.File('/data/lcz42_votes/data/train_label_distributions_data.h5', 'r')
-    y_train = np.array(train_distributions['train_label_distributions'])
-    val_distributions = h5py.File('/data/lcz42_votes/data/val_label_distributions_data.h5', 'r')
-    y_val = np.array(val_distributions['val_label_distributions'])
+    if alpha > 0:
+        train_distributions = h5py.File('/data/lcz42_votes/data' + '_alpha_' + str(alpha) + '.h5', 'r')
+        y_train = np.array(train_distributions['train_label_distributions'])
+        val_distributions = h5py.File('/data/lcz42_votes/data' + '_alpha_' + str(alpha) + '.h5', 'r')
+        y_val = np.array(val_distributions['val_label_distributions'])
+    else:
+        train_distributions = h5py.File('/data/lcz42_votes/data/train_label_distributions_data.h5', 'r')
+        y_train = np.array(train_distributions['train_label_distributions'])
+        val_distributions = h5py.File('/data/lcz42_votes/data/val_label_distributions_data.h5', 'r')
+        y_val = np.array(val_distributions['val_label_distributions'])
+
+
 
 'number of all samples in training and validation sets'
 trainNumber=y_train.shape[0]
@@ -122,7 +132,10 @@ if mode == "urban":
     PATH = PATH + "_urban"
 
 if distributional:
-    PATH = PATH + "_d"
+    if alpha > 0:
+        PATH = PATH + "_d" + "alpha_" + str(alpha)
+    else:
+        PATH = PATH + "_d"
 
 if entropy_quantile > 0:
     if uncertain == True:

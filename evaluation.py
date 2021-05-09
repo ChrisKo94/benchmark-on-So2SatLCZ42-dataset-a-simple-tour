@@ -22,6 +22,11 @@ import os
 #config.gpu_options.per_process_gpu_memory_fraction = 0.45
 #session = tf.Session(config=config)
 
+all_cities = False
+distributional = False
+
+alpha = 0.08
+
 def predata4LCZ(file, keyX, keyY):
     hf = h5py.File(file, 'r')
     x_tra = np.array(hf[keyX])
@@ -32,7 +37,11 @@ def predata4LCZ(file, keyX, keyY):
 
     return x_tra, y_tra
 ################################################################################
-file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/all_cities/'
+
+if all_cities:
+    file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/all_cities/'
+else:
+    file0 = 'C:/Users/koll_ch/PycharmProjects/benchmark-on-So2SatLCZ42-dataset-a-simple-tour/results/'
 
 mode = "urban"
 #mode = all
@@ -49,7 +58,11 @@ numC= 17 ;
 'loading test data'
 #file='/data/lcz42_votes/data/test_data.h5'
 #file='D:/Data/LCZ_Votes/test_data.h5'
-file='D:/Data/LCZ42_Cities/test_data.h5'
+
+if all_cities:
+    file='D:/Data/LCZ42_Cities/test_data.h5'
+else:
+    file = 'D:/Data/LCZ_Votes/test_data.h5'
 
 x_tst, y_tst= predata4LCZ(file, 'x', 'y')
 
@@ -63,7 +76,10 @@ patch_shape = (32, 32, 10)
 
 #########################################
 if mode == "urban":
-    modelbest = file0  + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_urban" + "_weights_best.hdf5"
+    if distributional:
+        modelbest = file0  + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_urban_d" + "_weights_best.hdf5"
+    else:
+        modelbest = file0 + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_urban" + "_weights_best.hdf5"
 else:
     modelbest = file0 + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_weights_best.hdf5"
 
@@ -94,7 +110,7 @@ sns.heatmap(conf_mat * 100, annot=True, fmt = ".0f", cmap="summer")
 plt.show()
 # print(type(C))
 
-classRep = classification_report(y_testV, y_pre)
+classRep = classification_report(y_testV, y_pre, digits = 4)
 oa = accuracy_score(y_testV, y_pre)
 cohKappa = cohen_kappa_score(y_testV, y_pre)
 
