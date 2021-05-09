@@ -93,9 +93,9 @@ if entropy_quantile > 0 and mode == "urban":
 
 if distributional:
     if alpha > 0:
-        train_distributions = h5py.File('/data/lcz42_votes/data' + '_alpha_' + str(alpha) + '.h5', 'r')
+        train_distributions = h5py.File('/data/lcz42_votes/data/train_label_distributions_' + '_alpha_' + str(alpha) + '.h5', 'r')
         y_train = np.array(train_distributions['train_label_distributions'])
-        val_distributions = h5py.File('/data/lcz42_votes/data' + '_alpha_' + str(alpha) + '.h5', 'r')
+        val_distributions = h5py.File('/data/lcz42_votes/data/val_label_distributions_' + '_alpha_' + str(alpha) + '.h5', 'r')
         y_val = np.array(val_distributions['val_label_distributions'])
     else:
         train_distributions = h5py.File('/data/lcz42_votes/data/train_label_distributions_data.h5', 'r')
