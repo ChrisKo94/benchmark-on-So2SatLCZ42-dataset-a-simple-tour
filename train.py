@@ -23,9 +23,10 @@ gpu = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(gpu[0], True)
 
 all_cities = False
-distributional = True
+distributional = False
+dry_run = True
 
-alpha = 0.08
+alpha = 0
 
 ###################################################
 'path to save models from check points:'
@@ -125,7 +126,10 @@ if distributional:
 else:
     model.compile(optimizer=Nadam(), loss='categorical_crossentropy', metrics=['accuracy'])
 
-early_stopping = EarlyStopping(monitor = 'val_loss', patience = 40)
+if dry_run:
+    early_stopping = EarlyStopping(monitor = 'val_loss', patience = 100)
+else:
+    early_stopping = EarlyStopping(monitor='val_loss', patience=40)
 
 PATH = file0 + "Sen2LCZ_" + str(batchSize) + "_lr_" + str(lrate)
 if mode == "urban":
@@ -143,15 +147,22 @@ if entropy_quantile > 0:
     else:
         PATH = PATH + "_most_certain_" + str(entropy_quantile)
 
+if dry_run:
+    PATH = PATH + "_dry_run"
+
 modelbest = PATH + "_weights_best.hdf5"
 
-checkpoint = ModelCheckpoint(modelbest, monitor='val_kullback_leibler_divergence', verbose=1, save_best_only=True,
-                             save_weights_only=True, mode='auto', save_freq='epoch')
+if distributional:
+    checkpoint = ModelCheckpoint(modelbest, monitor='val_kullback_leibler_divergence', verbose=1, save_best_only=True,
+                                 save_weights_only=True, mode='auto', save_freq='epoch')
+else:
+    checkpoint = ModelCheckpoint(modelbest, monitor='val_loss', verbose=1, save_best_only=True,
+                                 save_weights_only=True, mode='auto', save_freq='epoch')
 
 model.fit(generator(x_train, y_train, batchSize=batchSize, num=trainNumber, mode=mode),
                 steps_per_epoch = trainNumber//batchSize,
                 validation_data= generator(x_val, y_val, num=validationNumber, batchSize=batchSize, mode=mode),
                 validation_steps = validationNumber//batchSize,
-                epochs=100,
+                epochs=300,
                 max_queue_size=100,
                 callbacks=[early_stopping, checkpoint, lr_sched])

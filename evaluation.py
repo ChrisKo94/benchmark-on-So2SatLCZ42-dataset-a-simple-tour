@@ -77,7 +77,10 @@ patch_shape = (32, 32, 10)
 #########################################
 if mode == "urban":
     if distributional:
-        modelbest = file0  + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_urban_d" + "_weights_best.hdf5"
+        if alpha > 0:
+            modelbest = file0  + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_urban_d" + str(alpha) + "_weights_best.hdf5"
+        else:
+            modelbest = file0 + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_urban_d" + "_weights_best.hdf5"
     else:
         modelbest = file0 + "Sen2LCZ_" + str(batch_size) + "_lr_" + str(lrate) + "_urban" + "_weights_best.hdf5"
 else:
